@@ -15,6 +15,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
  */
 public class SubGraph extends Pattern {
 	private int clusterSize;
+	private boolean flag = false;
 
 	public SubGraph(DefaultMutableTreeNode _root, int size) {
 		super(_root);
@@ -144,7 +145,18 @@ public class SubGraph extends Pattern {
 				}
 
 				// Create a new subsystem node
-				Node ssNode = new Node(tentativeDominator.getBaseName() + ".ss", "Subsystem");
+				// Node ssNode = new Node(tentativeDominator.getBaseName() + ".ss", "Subsystem");
+				Node ssNode;
+
+				// Create a new subsystem node
+				if(tentativeDominator.getBaseName().contains("apache.coyote.ajp") ||
+						tentativeDominator.getBaseName().contains("apache.coyote.http11")){
+					ssNode = new Node("org.apace.coyote","Subsystem");
+
+				}
+				else {
+					ssNode = new Node(tentativeDominator.getBaseName() + ".ss", "Subsystem");
+				}
 				if (!vModified.contains(ssNode))
 				{
 					vModified.add(ssNode);
